@@ -1,12 +1,6 @@
 //définir  un namespace
 window.MyApp =  window.MyApp || {};
 
-//définir une autoexecutable
-(function()
-{
-
-})();
-
 // placé une "Classe dans cet autoexecutable"
 
 (function()
