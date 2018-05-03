@@ -1,0 +1,98 @@
+//définir  un namespace
+window.MyApp =  window.MyApp || {};
+
+//définir une autoexecutable
+(function()
+{
+
+})();
+
+// placé une "Classe dans cet autoexecutable"
+
+(function()
+{
+  /**
+   * Constructeur
+   */
+  window.MyApp.Vehicule = function(name)
+  {
+      this.name = name;      
+      
+      this.lastDecoration = null;    
+      this.vitesse = 0;
+  }
+
+/**
+* affiche le véhicule
+* @public
+*/
+  MyApp.Vehicule.prototype.display = function() 
+  {
+      var main = this.name + " vitesse: " + this.vitesse;
+      //execute private function
+      console.log(_decorate.call(this, main));  
+  };
+
+  /**
+   * @private
+   */
+  function _decorate(main) {
+      this.lastDecoration = "**" + main + "**";
+      return this.lastDecoration;
+  }
+
+
+  MyApp.Vehicule.prototype.start = function()
+  {
+      // private function will be executed when timer calling it, it's binded on this context
+      this.timerAcc = window.setInterval(_accelerate.bind(this), 800);
+  };
+
+  function _accelerate()
+  {
+      this.vitesse < 100 && this.vitesse++;
+      this.display();
+  }
+
+  MyApp.Vehicule.prototype.stop = function()
+  {
+      // public function will be executed when timer calling it, it's binded on this context
+      // you have to bind the context too, try without binding :
+      // this.timer = window.setInterval(this.decelerate, 800);
+      window.clearInterval(this.timerAcc);
+      this.timerDec = window.setInterval(this.decelerate.bind(this), 800);
+  };
+
+  MyApp.Vehicule.prototype.decelerate = function()
+  {
+        if (this.vitesse <= 0) {
+          window.clearInterval(this.timerDec);
+          this.display();
+          return;
+        } 
+        this.vitesse--;
+        this.display();
+  };
+})();
+
+//create some vehicules
+MyApp.vlist = [];
+MyApp.vlist.push(new MyApp.Vehicule("bateau"));
+MyApp.vlist.push(new MyApp.Vehicule("avion"));
+
+for(var i = 0; i<100; i++) {
+  MyApp.vlist.push(new MyApp.Vehicule("voiture "+i));
+}
+
+// start they
+MyApp.vlist.map(function(el) {
+  el.start();
+})
+//NOTE you can't access to private
+
+//do the same with stop in console
+/*MyApp.vlist.map(function(el) {
+  el.stop();
+})
+MyApp.vlist[0].stop();
+*/
