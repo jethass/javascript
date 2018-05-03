@@ -14,10 +14,9 @@ window.MyApp =  window.MyApp || {};
   /**
    * Constructeur
    */
-  window.MyApp.Vehicule = function(name)
+  MyApp.Vehicule = function(name)
   {
       this.name = name;      
-      
       this.lastDecoration = null;    
       this.vitesse = 0;
   }
