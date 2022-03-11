@@ -1,7 +1,7 @@
 https://blog.xebia.fr/2017/11/14/asyncawait-une-meilleure-facon-de-faire-de-lasynchronisme-en-javascript/
 require ('babel-polyfill')
 
-var get = function(url){
+var get = async function(url){
   return new Promise(function(resolve, reject){
      var xhr = new window.XMLHttpRequest();
      xhr.onreadystatechange = function(){
